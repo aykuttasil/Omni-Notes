@@ -21,7 +21,7 @@
   <string name="title_item_list">Notlar</string>
   <string name="add_note">Not Ekle</string>
   <string name="title">Not Başlığı</string>
-  <string name="title_activity_list">Omni Notes</string>
+  <string name="title_activity_list">Pass Notes</string>
   <string name="search">Arama</string>
   <string name="search_hint">Notlarda ara</string>
   <string name="content">Neyi unutmamalısın</string>

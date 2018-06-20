@@ -18,7 +18,6 @@
 package it.feio.android.omninotes;
 
 import android.animation.ValueAnimator;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,10 +31,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+
 import de.greenrobot.event.EventBus;
 import it.feio.android.omninotes.async.CategoryMenuTask;
 import it.feio.android.omninotes.async.MainMenuTask;
-import it.feio.android.omninotes.async.bus.*;
+import it.feio.android.omninotes.async.bus.CategoriesUpdatedEvent;
+import it.feio.android.omninotes.async.bus.DynamicNavigationReadyEvent;
+import it.feio.android.omninotes.async.bus.NavigationUpdatedEvent;
+import it.feio.android.omninotes.async.bus.NavigationUpdatedNavDrawerClosedEvent;
+import it.feio.android.omninotes.async.bus.NotesLoadedEvent;
+import it.feio.android.omninotes.async.bus.NotesUpdatedEvent;
+import it.feio.android.omninotes.async.bus.SwitchFragmentEvent;
 import it.feio.android.omninotes.models.Category;
 import it.feio.android.omninotes.models.NavigationItem;
 import it.feio.android.omninotes.utils.Constants;
@@ -114,10 +120,10 @@ public class NavigationDrawerFragment extends Fragment {
 
     public void onEvent(NotesLoadedEvent event) {
         if (mDrawerLayout != null) {
-			if (!isDoublePanelActive()) {
-				mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-			}
-		}
+            if (!isDoublePanelActive()) {
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
+        }
         if (getMainActivity().getSupportFragmentManager().getBackStackEntryCount() == 0) {
             init();
         }
@@ -144,9 +150,9 @@ public class NavigationDrawerFragment extends Fragment {
             mActivity.getSupportActionBar().setTitle(((Category) navigationUpdatedEvent.navigationItem).getName());
         }
         if (mDrawerLayout != null) {
-			if (!isDoublePanelActive()) {
-				mDrawerLayout.closeDrawer(GravityCompat.START);
-			}
+            if (!isDoublePanelActive()) {
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+            }
             new Handler().postDelayed(() -> EventBus.getDefault().post(new NavigationUpdatedNavDrawerClosedEvent
                     (navigationUpdatedEvent.navigationItem)), 400);
         }
@@ -192,7 +198,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Styling options
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.setDrawerIndicatorEnabled(true);
 
         Log.d(Constants.TAG, "Finished navigation drawer initialization");
@@ -236,11 +242,11 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
 
-	public static boolean isDoublePanelActive() {
+    public static boolean isDoublePanelActive() {
 //		Resources resources = OmniNotes.getAppContext().getResources();
 //		return resources.getDimension(R.dimen.navigation_drawer_width) == resources.getDimension(R.dimen
 //				.navigation_drawer_reserved_space);
-		return false;
-	}
+        return false;
+    }
 
 }
