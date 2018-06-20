@@ -21,7 +21,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,10 +43,10 @@ import it.feio.android.simplegallery.views.GalleryViewPager;
 
 
 /**
- * An example full-screen activity that shows and hides the system UI (i.e. status bar and navigation/system bar) 
+ * An example full-screen activity that shows and hides the system UI (i.e. status bar and navigation/system bar)
  * * with user interaction.
  */
-public class GalleryActivity extends ActionBarActivity {
+public class GalleryActivity extends AppCompatActivity {
 
     /**
      * Whether or not the system UI should be auto-hidden after {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -54,19 +54,21 @@ public class GalleryActivity extends ActionBarActivity {
     private static final boolean AUTO_HIDE = false;
 
     /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after user interaction before hiding the 
+     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after user interaction before hiding the
      * * system UI.
      */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 
     /**
-     * If set, will toggle the system UI visibility upon interaction. Otherwise, will show the system UI visibility 
+     * If set, will toggle the system UI visibility upon interaction. Otherwise, will show the system UI visibility
      * * upon interaction.
      */
     private static final boolean TOGGLE_ON_CLICK = true;
 
-    @BindView(R.id.gallery_root) InterceptorFrameLayout galleryRootView;
-    @BindView(R.id.fullscreen_content)  GalleryViewPager mViewPager;
+    @BindView(R.id.gallery_root)
+    InterceptorFrameLayout galleryRootView;
+    @BindView(R.id.fullscreen_content)
+    GalleryViewPager mViewPager;
 
     private List<Attachment> images;
 
@@ -84,7 +86,7 @@ public class GalleryActivity extends ActionBarActivity {
 
     @Override
     public void onStart() {
-		((OmniNotes)getApplication()).getAnalyticsHelper().trackScreenView(getClass().getName());
+        ((OmniNotes) getApplication()).getAnalyticsHelper().trackScreenView(getClass().getName());
         super.onStart();
     }
 
@@ -138,7 +140,7 @@ public class GalleryActivity extends ActionBarActivity {
             imageUris.add(mAttachment.getUri());
         }
 
-		GalleryPagerAdapter pagerAdapter = new GalleryPagerAdapter(this, imageUris);
+        GalleryPagerAdapter pagerAdapter = new GalleryPagerAdapter(this, imageUris);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(pagerAdapter);
         mViewPager.setCurrentItem(clickedImage);
@@ -165,8 +167,8 @@ public class GalleryActivity extends ActionBarActivity {
             case R.id.menu_gallery:
                 viewMedia();
                 break;
-			default:
-				Log.e(Constants.TAG, "Wrong element choosen: " + item.getItemId());
+            default:
+                Log.e(Constants.TAG, "Wrong element choosen: " + item.getItemId());
         }
         return super.onOptionsItemSelected(item);
     }

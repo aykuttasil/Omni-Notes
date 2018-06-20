@@ -19,7 +19,7 @@ package it.feio.android.omninotes;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
@@ -32,10 +32,12 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
 
-public class SettingsActivity extends ActionBarActivity {
+public class SettingsActivity extends AppCompatActivity {
 
-	@BindView(R.id.toolbar) Toolbar toolbar;
-	@BindView(R.id.crouton_handle) ViewGroup croutonViewContainer;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.crouton_handle)
+    ViewGroup croutonViewContainer;
 
     private List<Fragment> backStack = new ArrayList<>();
 
@@ -44,7 +46,7 @@ public class SettingsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-		ButterKnife.bind(this);
+        ButterKnife.bind(this);
         initUI();
         getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
     }
@@ -84,13 +86,13 @@ public class SettingsActivity extends ActionBarActivity {
     }
 
 
-	public void showMessage(int messageId, Style style) {
-		showMessage(getString(messageId), style);
-	}
+    public void showMessage(int messageId, Style style) {
+        showMessage(getString(messageId), style);
+    }
 
 
-	public void showMessage(String message, Style style) {
-		// ViewGroup used to show Crouton keeping compatibility with the new Toolbar
-		Crouton.makeText(this, message, style, croutonViewContainer).show();
-	}
+    public void showMessage(String message, Style style) {
+        // ViewGroup used to show Crouton keeping compatibility with the new Toolbar
+        Crouton.makeText(this, message, style, croutonViewContainer).show();
+    }
 }

@@ -25,7 +25,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,12 +60,18 @@ import it.feio.android.omninotes.utils.Constants;
 
 public class SketchFragment extends Fragment implements OnDrawChangedListener {
 
-    @BindView(R.id.sketch_stroke) ImageView stroke;
-    @BindView(R.id.sketch_eraser) ImageView eraser;
-    @BindView(R.id.drawing) SketchView mSketchView;
-    @BindView(R.id.sketch_undo) ImageView undo;
-    @BindView(R.id.sketch_redo) ImageView redo;
-    @BindView(R.id.sketch_erase) ImageView erase;
+    @BindView(R.id.sketch_stroke)
+    ImageView stroke;
+    @BindView(R.id.sketch_eraser)
+    ImageView eraser;
+    @BindView(R.id.drawing)
+    SketchView mSketchView;
+    @BindView(R.id.sketch_undo)
+    ImageView undo;
+    @BindView(R.id.sketch_redo)
+    ImageView redo;
+    @BindView(R.id.sketch_erase)
+    ImageView erase;
     private int seekBarStrokeProgress, seekBarEraserProgress;
     private View popupLayout, popupEraserLayout;
     private ImageView strokeImageView, eraserImageView;
@@ -84,9 +90,9 @@ public class SketchFragment extends Fragment implements OnDrawChangedListener {
 
     @Override
     public void onStart() {
-		((OmniNotes)getActivity().getApplication()).getAnalyticsHelper().trackScreenView(getClass().getName());
+        ((OmniNotes) getActivity().getApplication()).getAnalyticsHelper().trackScreenView(getClass().getName());
 
-		super.onStart();
+        super.onStart();
     }
 
 
@@ -136,14 +142,14 @@ public class SketchFragment extends Fragment implements OnDrawChangedListener {
 
         AlphaManager.setAlpha(eraser, 0.4f);
         eraser.setOnClickListener(v -> {
-			if (mSketchView.getMode() == SketchView.ERASER) {
-				showPopup(v, SketchView.ERASER);
-			} else {
-				mSketchView.setMode(SketchView.ERASER);
-				AlphaManager.setAlpha(stroke, 0.4f);
-				AlphaManager.setAlpha(eraser, 1f);
-			}
-		});
+            if (mSketchView.getMode() == SketchView.ERASER) {
+                showPopup(v, SketchView.ERASER);
+            } else {
+                mSketchView.setMode(SketchView.ERASER);
+                AlphaManager.setAlpha(stroke, 0.4f);
+                AlphaManager.setAlpha(eraser, 1f);
+            }
+        });
 
         undo.setOnClickListener(v -> mSketchView.undo());
 
@@ -155,28 +161,26 @@ public class SketchFragment extends Fragment implements OnDrawChangedListener {
                 askForErase();
             }
 
-			private void askForErase() {
-				new MaterialDialog.Builder(getActivity())
-						.content(R.string.erase_sketch)
-						.positiveText(R.string.confirm)
-						.callback(new MaterialDialog.ButtonCallback() {
-							@Override
-							public void onPositive(MaterialDialog dialog) {
-								mSketchView.erase();
-							}
-						})
-						.build().show();
-			}
-		});
+            private void askForErase() {
+                new MaterialDialog.Builder(getActivity())
+                        .content(R.string.erase_sketch)
+                        .positiveText(R.string.confirm)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                mSketchView.erase();
+                            }
+                        })
+                        .build().show();
+            }
+        });
 
 
         // Inflate the popup_layout.xml
-        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(ActionBarActivity
-                .LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE);
         popupLayout = inflater.inflate(R.layout.popup_sketch_stroke, null);
         // And the one for eraser
-        LayoutInflater inflaterEraser = (LayoutInflater) getActivity().getSystemService(ActionBarActivity
-                .LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflaterEraser = (LayoutInflater) getActivity().getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE);
         popupEraserLayout = inflaterEraser.inflate(R.layout.popup_sketch_eraser, null);
 
         // Actual stroke shape size is retrieved
@@ -205,8 +209,8 @@ public class SketchFragment extends Fragment implements OnDrawChangedListener {
             case android.R.id.home:
                 getActivity().onBackPressed();
                 break;
-			default:
-				Log.e(Constants.TAG, "Wrong element choosen: " + item.getItemId());
+            default:
+                Log.e(Constants.TAG, "Wrong element choosen: " + item.getItemId());
         }
         return super.onOptionsItemSelected(item);
     }
@@ -252,9 +256,9 @@ public class SketchFragment extends Fragment implements OnDrawChangedListener {
         popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         popup.setFocusable(true);
         popup.setOnDismissListener(() -> {
-			if (mColorPicker.getColor() != oldColor)
-				mColorPicker.setOldCenterColor(oldColor);
-		});
+            if (mColorPicker.getColor() != oldColor)
+                mColorPicker.setOldCenterColor(oldColor);
+        });
 
         // Clear the default translucent background
         popup.setBackgroundDrawable(new BitmapDrawable());

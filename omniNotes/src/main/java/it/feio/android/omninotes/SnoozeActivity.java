@@ -25,10 +25,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+
+import java.util.Arrays;
+import java.util.Calendar;
+
 import it.feio.android.omninotes.async.notes.SaveNoteTask;
 import it.feio.android.omninotes.helpers.date.DateHelper;
 import it.feio.android.omninotes.models.Note;
@@ -38,11 +42,8 @@ import it.feio.android.omninotes.utils.ReminderHelper;
 import it.feio.android.omninotes.utils.date.DateUtils;
 import it.feio.android.omninotes.utils.date.ReminderPickers;
 
-import java.util.Arrays;
-import java.util.Calendar;
 
-
-public class SnoozeActivity extends ActionBarActivity implements OnReminderPickedListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class SnoozeActivity extends AppCompatActivity implements OnReminderPickedListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private Note note;
     private Note[] notes;
@@ -89,7 +90,7 @@ public class SnoozeActivity extends ActionBarActivity implements OnReminderPicke
 
     private void postpone(SharedPreferences prefs, Long alarm, String recurrenceRule) {
         int pickerType = prefs.getBoolean("settings_simple_calendar", false) ? ReminderPickers.TYPE_AOSP :
-				ReminderPickers.TYPE_GOOGLE;
+                ReminderPickers.TYPE_GOOGLE;
         ReminderPickers reminderPicker = new ReminderPickers(this, this, pickerType);
         reminderPicker.pick(alarm, recurrenceRule);
         onDateSetListener = reminderPicker;
@@ -133,7 +134,7 @@ public class SnoozeActivity extends ActionBarActivity implements OnReminderPicke
     public static void setNextRecurrentReminder(Note note) {
         if (!TextUtils.isEmpty(note.getRecurrenceRule())) {
             long nextReminder = DateHelper.nextReminderFromRecurrenceRule(Long.parseLong(note.getAlarm()), note
-					.getRecurrenceRule());
+                    .getRecurrenceRule());
             if (nextReminder > 0) {
                 updateNoteReminder(nextReminder, note, true);
             }
@@ -154,7 +155,7 @@ public class SnoozeActivity extends ActionBarActivity implements OnReminderPicke
             new SaveNoteTask(false).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, noteToUpdate);
         } else {
             ReminderHelper.addReminder(OmniNotes.getAppContext(), noteToUpdate, reminder);
-			ReminderHelper.showReminderMessage(noteToUpdate.getAlarm());
+            ReminderHelper.showReminderMessage(noteToUpdate.getAlarm());
         }
     }
 
